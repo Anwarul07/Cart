@@ -102,6 +102,55 @@ function updateCartTotal() {
 
 
 
+// Remove Cart Item Function indivisual    
+function removeCartItem(event) {
+    let buttonClicked = event.target
+    buttonClicked.parentElement.remove()
+    updateCartTotal()
+}
+
+// Quantity Change Function indivisual
+function quantityChanged(event) {
+    let input = event.target
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateCartTotal()
+}
+
+
+
+// Add Item to Cart Function with price an dimage , tag indivisual
+function addItemToCart(title, price, imageSrc) {
+    let cartRow = document.createElement('div');
+    cartRow.classList.add('cart-box');
+    let cartItems = document.getElementsByClassName('cart-content')[0];
+    let cartItemNames = cartItems.getElementsByClassName('product-title');
+    for (let i = 0; i < cartItemNames.length; i++) {
+        if (cartItemNames[i].innerText == title) {
+            alert('This item is already added to the cart');
+            return;
+        }
+    }
+
+    //in additemtocart function
+    let cartRowContents = `<img src="${imageSrc}" alt="" class="cart-img">
+                           <div class="detail-box">
+                                <div class="product-title">${title}</div>
+                                <div class="cart-price">${price}</div>
+                                <input type="number" name="" id="" class="cart-quantity" value="1">
+                            </div>
+                            <!-- Remove cart  -->
+                            <i class='bx bxs-trash-alt cart-remove'></i>`;
+
+
+    //in additemtocart function
+    cartRow.innerHTML = cartRowContents;
+    cartItems.append(cartRow);
+    cartRow.getElementsByClassName('cart-remove')[0].addEventListener('click', removeCartItem);
+    cartRow.getElementsByClassName('cart-quantity')[0].addEventListener('change', quantityChanged);
+
+}
 
 
 
